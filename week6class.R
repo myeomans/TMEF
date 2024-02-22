@@ -15,6 +15,7 @@ library(textclean)
 library(tidyverse)
 library(glmnet)
 library(sentimentr)
+library(doc2concrete)
 
 source("vectorFunctions.R") # a new one!
 source("TMEF_dfm.R")
