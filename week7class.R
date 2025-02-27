@@ -30,7 +30,7 @@ set.seed(2022)
 
 rev_med<-readRDS("rev_med.RDS")
 
-train_split=sample(1:nrow(rev_med),9000)
+train_split=sample(1:nrow(rev_med),1000)
 
 rev_med_train<-rev_med[train_split,]
 rev_med_test<-rev_med[-train_split,]
@@ -89,7 +89,7 @@ lemmas<-rev_lemma_docs$text %>%
   names()
 
 # the normal approach of stemming
-stems<-TASSL_dfm(rev_lemma_docs$text) %>%
+stems<-TMEF_dfm(rev_lemma_docs$text) %>%
   colMeans() %>%
   sort(decreasing=TRUE) %>%
   names()
