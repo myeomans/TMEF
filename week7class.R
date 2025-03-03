@@ -177,7 +177,7 @@ rev_tagged_docs<-rev_sp_tagged %>%
   mutate(doc_id=as.numeric(str_replace_all(doc_id,"text",""))) %>%
   arrange(doc_id)
 
-TASSL_dfm(rev_tagged_docs$text) %>%
+TMEF_dfm(rev_tagged_docs$text) %>%
   colnames() %>%
   sort()
 
@@ -221,7 +221,7 @@ rev_ner_docs<-rev_sp_ner %>%
   arrange(doc_id)
 
 # extract all the common noun phrases
-phrases<-TASSL_dfm(rev_ner_docs$text,
+phrases<-TMEF_dfm(rev_ner_docs$text,
                    min.prop = .001) %>%
   convert(to="data.frame") %>%
   select(contains("_"),-doc_id) %>%
@@ -349,7 +349,7 @@ kendall_acc(ecMain_merged$wordcount_a1,
             ecMain_merged$EPS_actual)
 
 
-# This is how you would normally produce the politeness features....
+`# This is how you would normally produce the politeness features....
 
 # Very slow...
 # ecQA_polite<-politeness(ecQA$text,parser="spacy")
