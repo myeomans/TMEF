@@ -1,6 +1,6 @@
 ################################################
 #
-#           Text Analysis for Business
+# Text Mining for Economics & Finance
 #
 #                    Activity 1
 #
@@ -432,7 +432,6 @@ ggsave("week1.png",dpi=200,width=20,height=10)
 
 # Part 2 - let's build an NLP model
 
-
 ######### Simple bag of words
 
 testDocs<-c("This is a test sentence.", 
@@ -566,7 +565,7 @@ dox %>%
 # Typically the cut-off gets set around 1% of documents
 
 # Here  I am creating a function that saves all of our defaults in one place
-TAB_dfm<-function(text,
+TMEF_dfm<-function(text,
                   ngrams=1:2,
                   stop.words=TRUE,
                   min.prop=.01){
@@ -589,14 +588,14 @@ TAB_dfm<-function(text,
   return(text_data)
 }
 
-TAB_dfm(dox)
+TMEF_dfm(dox)
 
 # we can easily modify the defaults of our custom arguments
-TAB_dfm(dox, ngrams=2)
+TMEF_dfm(dox, ngrams=2)
 
-TAB_dfm(dox, stop.words = FALSE)
+TMEF_dfm(dox, stop.words = FALSE)
 
-TAB_dfm(dox, min.prop=.25)
+TMEF_dfm(dox, min.prop=.25)
 
 # Note... this is a bit rudimentary
 # If you prefer, you can use a more robust function I wrote for a different package
@@ -638,7 +637,7 @@ review_dat <- review_dat %>%
 names(review_dat)
 
 # Calculate a 1-gram feature count matrix for the review data, with no dropped words
-dfm1<-TAB_dfm(review_dat$text,
+dfm1<-TMEF_dfm(review_dat$text,
               ngrams=1,
               min.prop=0,
               stop.words = FALSE)
@@ -658,7 +657,7 @@ sort(colMeans(dfm1))[1:20]
 table(review_dat$price)
 
 # Let's only use 1-grams for now
-dfm3<-TAB_dfm(review_dat$text,ngrams=1) %>%
+dfm3<-TMEF_dfm(review_dat$text,ngrams=1) %>%
   convert(to="data.frame") %>%
   select(-doc_id)
 
@@ -698,7 +697,7 @@ train_split=sample(1:nrow(review_dat),round(nrow(review_dat)/2))
 length(train_split)
 
 # create our prediction variables
-dfm3<-TAB_dfm(review_dat$text,ngrams=1) %>%
+dfm3<-TMEF_dfm(review_dat$text,ngrams=1) %>%
   convert(to="data.frame") %>%
   select(-doc_id)
 
