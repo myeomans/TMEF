@@ -171,7 +171,7 @@ pros_acc
 
 # Let's apply the same model to the cons text
 
-dfm_amazon_test_cons<-TMEF_dfm(gd_amazon_test$cons,ngrams=1:2)  %>%
+dfm_amazon_test_cons<-TMEF_dfm(gd_amazon_test$cons,ngrams=1:2,min.prop = 0)  %>%
   dfm_match(colnames(dfm_amazon_train_pros)) %>%
   convert(to="matrix")
 
