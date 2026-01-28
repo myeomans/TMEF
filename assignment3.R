@@ -1,11 +1,11 @@
-################################################
+########################################################
 #
-#     Text Mining for Economics and Finance
+# Machine Learning & Text Analysis for Social Science
 #
 #               Assignment 3
 #
 #
-################################################
+########################################################
 
 # new packages this week
 #install.packages("sentimentr") # for sentiment
@@ -24,7 +24,7 @@ source("TMEF_dfm.R")
 source("kendall_acc.R")
 
 # Review data
-rev_med<-readRDS("rev_med.RDS")
+rev_med<-readRDS("data/rev_med.RDS")
 
 # Train model
 
@@ -305,12 +305,12 @@ vader::vader_df(text = c("lol this is not bad",
 
 # the categories are in a text field, so we need to extract them - with dfm!
 
-train_cats<-TAB_dfm(rev_med_train$categories)%>%
+train_cats<-TMEF_dfm(rev_med_train$categories)%>%
   convert(to="data.frame") %>%
   as_tibble() %>%
   select(chines,sandwich,nightlif,mexican) 
 
-# 4432 that are in only one category ... let's dump the rest
+# 3437 that are in only one category ... let's dump the rest
 table(rowSums(train_cats))
 
 one_cat_train=rev_med_train %>%
@@ -325,7 +325,7 @@ one_cat_train=rev_med_train %>%
 table(one_cat_train$category)
 
 # do the same in the test set
-test_cats<-TAB_dfm(rev_med_test$categories)%>%
+test_cats<-TMEF_dfm(rev_med_test$categories)%>%
   convert(to="data.frame") %>%
   as_tibble() %>%
   select(chines,sandwich,nightlif,mexican) 
@@ -345,9 +345,9 @@ table(one_cat_test$category)
 
 # Feature extraction is the same... n-grams
 
-one_cat_dfm_train<-TAB_dfm(one_cat_train$text,ngrams=1)
+one_cat_dfm_train<-TMEF_dfm(one_cat_train$text,ngrams=1)
 
-one_cat_dfm_test<-TAB_dfm(one_cat_test$text,
+one_cat_dfm_test<-TMEF_dfm(one_cat_test$text,
                           ngrams=1,
                           min.prop=0) %>%
   dfm_match(colnames(one_cat_dfm_train))
@@ -388,7 +388,7 @@ cats_predict<-predict(one_cat_model,
 # use the probabilities in a regression instead of the absolute labels, etc.
 
 # returns a matrix - one row per document, one column per class
-head(cats_predict)
+head(cats_predict,20)
 dim(cats_predict)
 
 
@@ -443,41 +443,33 @@ plot(rev_topicMod20,type="summary",n = 7,xlim=c(0,.3),labeltype = "frex",
      topic.names = topicNames) 
 
 # You can add names to the vector one at a time
-topicNames[1]=""
-topicNames[2]=""
-topicNames[4]=""
-topicNames[6]=""
-topicNames[12]=""
-topicNames[13]=""
-topicNames[17]=""
-topicNames[18]=""
-topicNames[20]=""
+topicNames[1]="Payment"
+topicNames[9]="Seafood"
+topicNames[13]="Food Quality"
+topicNames[14]="Ramen"
+topicNames[11]="Breakfast"
 # We can also grab more words per topic
 labelTopics(rev_topicMod20)
 
 findThoughts(model=rev_topicMod20,
              texts=rev_med_train$text,
-             topics=15,n = 1)
+             topics=11,n = 5)
 
 # We can even put them in a word cloud! If you fancy it
 
-cloud(rev_topicMod20,19)
+cloud(rev_topicMod20,11)
 
-cloud(rev_topicMod20,13)
+cloud(rev_topicMod20,9)
 
-# Which topics correlate with one another?
-plot(topicCorr(rev_topicMod20),
-     vlabels=topicNames,
-     vertex.size=20)
 
-stmEffects<-estimateEffect(1:topicNum~stars,
+stmeffects<-estimateEffect(1:topicNum~stars,
                            rev_topicMod20,
                            meta= rev_med_train %>%
                              select(stars))
 
 
 # The default plotting function is bad... Here's another version
-bind_rows(lapply(summary(stmEffects)$tables,function(x) x[2,1:2])) %>%
+bind_rows(lapply(summary(stmeffects)$tables,function(x) x[2,1:2])) %>%
   mutate(topic=factor(topicNames,ordered=T,
                       levels=topicNames),
          se_u=Estimate+`Std. Error`,
@@ -518,3 +510,5 @@ test_stm_predict<-predict(rev_model_stm,
 acc_stm<-kendall_acc(rev_med_test$stars,test_stm_predict)
 
 acc_stm
+
+
