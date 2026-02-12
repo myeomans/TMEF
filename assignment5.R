@@ -25,7 +25,10 @@ source("kendall_acc.R")
 #     an introduction to some spacy features
 ################################################
 
+<<<<<<< HEAD
 #spacyr::spacy_install()
+=======
+>>>>>>> eb9ffddabe2bb94fb542326aca40eedad793335f
 
 ###################################
 set.seed(02138)

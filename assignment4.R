@@ -34,10 +34,13 @@ vecSmall<-readRDS("data/vecSmall.RDS")
 # vecFile<-data.table::fread("crawl-300d-2M.vec",
 #                            quote="",header=F,col.names = c("word",paste0("vec",1:300)))
 
+<<<<<<< HEAD
 vecFile<-data.table::fread("/Users/myeomans/Desktop/crawl-300d-2M.vec",
                            quote="",header=F,col.names = c("word",paste0("vec",1:300)))
 vecFile<-vecFile[!is.na(vecFile$word),]
 
+=======
+>>>>>>> eb9ffddabe2bb94fb542326aca40eedad793335f
 # remember: ALWAYS clear big files out of the workspace to reduce memory load before closing RStudio
 #rm(vecSmall)
 head(vecSmall)
@@ -254,6 +257,7 @@ gender_pairs<-data.frame(high=c("man","men","he","boy","male","masculine"),
 
 # Example documents
 dox<-c("camping","baseball","boxing","volleyball","softball",
+<<<<<<< HEAD
        "football","gymnastics","bobsledding","skiing","snowboarding",
        "rowing","horseriding","dressage","fencing","polo",
        "golf","tennis","soccer","basketball","hockey")
@@ -261,6 +265,14 @@ dox<-c("camping","baseball","boxing","volleyball","softball",
 gender_proj<-semaxis(gender_pairs,dox,vecFile)
 
 class_proj<-semaxis(class_pairs,dox,vecFile)
+=======
+       "football","gymnastics","bobsled","skiing","snowboarding",
+       "golf","tennis","soccer","basketball","hockey")
+
+gender_proj<-semaxis(gender_pairs,dox,vecSmall)
+
+class_proj<-semaxis(class_pairs,dox,vecSmall)
+>>>>>>> eb9ffddabe2bb94fb542326aca40eedad793335f
 
 data.frame(sport=dox,gender=gender_proj,
            class=class_proj) %>%
@@ -268,8 +280,12 @@ data.frame(sport=dox,gender=gender_proj,
   geom_text() +
   theme_bw() +
   labs(x="Gender   (masculine +)",
+<<<<<<< HEAD
        y="Class   (rich +)") +
   theme(text=element_text(size=20))
+=======
+       y="Class   (rich +)")
+>>>>>>> eb9ffddabe2bb94fb542326aca40eedad793335f
 
 
 rev_med_test$class_proj<-semaxis(class_pairs,rev_med_test$text,vecSmall)

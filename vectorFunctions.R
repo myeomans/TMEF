@@ -122,7 +122,12 @@ bowSimCalc<-function(x,y){
 # Semantic Axis!
 ################################################
 
+cdfm<-column_to_rownames(vecFile,var = "word")
+cdfm<-t(apply(cdfm,1,nrm))
+
+
 semaxis<-function(pairs,docs,vecdata){
+
   if(!(is.data.frame(pairs) & ncol(pairs)==2)){
     stop("Must input two-column dataframe")
   }
