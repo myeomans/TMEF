@@ -254,7 +254,7 @@ reviews %>%
 reviews %>%
   group_by(stars,price) %>%
   summarize(avg=mean(wordcount),
-            se=sd(wordcount)/sqrt(n())) %>%
+            se=sd(wordcount)/sqrt(n())) 
   ggplot(aes(x=stars,y=avg,
              ymin=avg-se,ymax=avg+se)) +
   geom_point() +

@@ -17,7 +17,7 @@ library(spacyr) # a new one!
 library(politeness) # another new one! And a package I wrote :)
 library(semgram) # also new - for motifs
 
-source("MLTASS_dfm.R")
+source("TMEF_dfm.R")
 source("kendall_acc.R")
 
 ################################################
@@ -26,7 +26,7 @@ source("kendall_acc.R")
 ################################################
 
 
-#spacyr::spacy_install()
+# spacyr::spacy_install()
 
 ###################################
 set.seed(02138)
