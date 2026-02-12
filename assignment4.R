@@ -1,6 +1,6 @@
 ########################################################
 #
-# Machine Learning & Text Analysis for Social Science
+# Text Mining for Economics & Finance
 #
 #               Assignment 4
 #
@@ -33,6 +33,10 @@ vecSmall<-readRDS("data/vecSmall.RDS")
 # library(data.table)
 # vecFile<-data.table::fread("crawl-300d-2M.vec",
 #                            quote="",header=F,col.names = c("word",paste0("vec",1:300)))
+
+vecFile<-data.table::fread("/Users/myeomans/Desktop/crawl-300d-2M.vec",
+                           quote="",header=F,col.names = c("word",paste0("vec",1:300)))
+vecFile<-vecFile[!is.na(vecFile$word),]
 
 # remember: ALWAYS clear big files out of the workspace to reduce memory load before closing RStudio
 #rm(vecSmall)
@@ -250,12 +254,13 @@ gender_pairs<-data.frame(high=c("man","men","he","boy","male","masculine"),
 
 # Example documents
 dox<-c("camping","baseball","boxing","volleyball","softball",
-       "football","gymnastics","bobsled","skiing","snowboarding",
+       "football","gymnastics","bobsledding","skiing","snowboarding",
+       "rowing","horseriding","dressage","fencing","polo",
        "golf","tennis","soccer","basketball","hockey")
 
-gender_proj<-semaxis(gender_pairs,dox,vecSmall)
+gender_proj<-semaxis(gender_pairs,dox,vecFile)
 
-class_proj<-semaxis(class_pairs,dox,vecSmall)
+class_proj<-semaxis(class_pairs,dox,vecFile)
 
 data.frame(sport=dox,gender=gender_proj,
            class=class_proj) %>%
@@ -263,7 +268,8 @@ data.frame(sport=dox,gender=gender_proj,
   geom_text() +
   theme_bw() +
   labs(x="Gender   (masculine +)",
-       y="Class   (rich +)")
+       y="Class   (rich +)") +
+  theme(text=element_text(size=20))
 
 
 rev_med_test$class_proj<-semaxis(class_pairs,rev_med_test$text,vecSmall)
