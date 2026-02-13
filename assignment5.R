@@ -1,8 +1,8 @@
 ################################################
 #
-# Machine Learning & Text Analysis for Social Science
+# Text Mining for Economics & Finance
 #
-#              Assignment 6
+#              Assignment 5
 #
 #
 ################################################
@@ -17,7 +17,7 @@ library(spacyr) # a new one!
 library(politeness) # another new one! And a package I wrote :)
 library(semgram) # also new - for motifs
 
-source("MLTASS_dfm.R")
+source("TMEF_dfm.R")
 source("kendall_acc.R")
 
 ################################################
@@ -25,6 +25,8 @@ source("kendall_acc.R")
 #     an introduction to some spacy features
 ################################################
 
+
+# spacyr::spacy_install()
 
 ###################################
 set.seed(02138)
@@ -106,7 +108,7 @@ lemmas<-rev_lemma_docs$text %>%
   names()
 
 # the normal approach of stemming
-stems<-MLTASS_dfm(rev_lemma_docs$text) %>%
+stems<-TMEF_dfm(rev_lemma_docs$text) %>%
   colMeans() %>%
   sort(decreasing=TRUE) %>%
   names()
@@ -194,7 +196,7 @@ rev_tagged_docs<-rev_sp_tagged %>%
   mutate(doc_id=as.numeric(str_replace_all(doc_id,"text",""))) %>%
   arrange(doc_id)
 
-MLTASS_dfm(rev_tagged_docs$text) %>%
+TMEF_dfm(rev_tagged_docs$text) %>%
   colnames() %>%
   sort()
 
@@ -238,7 +240,7 @@ rev_ner_docs<-rev_sp_ner %>%
   arrange(doc_id)
 
 # extract all the common noun phrases
-phrases<-MLTASS_dfm(rev_ner_docs$text,
+phrases<-TMEF_dfm(rev_ner_docs$text,
                     min.prop = .001) %>%
   convert(to="data.frame") %>%
   select(contains("_"),-doc_id) %>%

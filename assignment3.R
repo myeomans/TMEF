@@ -1,6 +1,6 @@
 ########################################################
 #
-# Machine Learning & Text Analysis for Social Science
+# Text Mining for Economics & Finance
 #
 #               Assignment 3
 #
