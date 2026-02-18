@@ -211,16 +211,24 @@ surveylong %>%
              y=topic_named)) +
   geom_density_ridges() +
   theme_bw() +
+<<<<<<< HEAD
+  theme(legend.position="none")
+=======
   theme(legend.position="none",
         panel.grid=element_blank(),
         axis.text = element_text(size=20),
         axis.title = element_text(size=24))
+>>>>>>> 182c78ed6f299e63c3443889ec6406661e02454d
 
 ggsave("topic_knowledge.png")
 
 #################################################################
 
+<<<<<<< HEAD
+reviews<-readRDS("rev_med.RDS") %>%
+=======
 reviews<-readRDS("data/rev_med.RDS") %>%
+>>>>>>> 182c78ed6f299e63c3443889ec6406661e02454d
   mutate(wordcount=str_count(text,"[[:alpha:]]+"))
 
 # let's plot the effect of word count on star rating
@@ -254,7 +262,11 @@ reviews %>%
 reviews %>%
   group_by(stars,price) %>%
   summarize(avg=mean(wordcount),
+<<<<<<< HEAD
+            se=sd(wordcount)/sqrt(n())) %>%
+=======
             se=sd(wordcount)/sqrt(n())) 
+>>>>>>> 182c78ed6f299e63c3443889ec6406661e02454d
   ggplot(aes(x=stars,y=avg,
              ymin=avg-se,ymax=avg+se)) +
   geom_point() +
